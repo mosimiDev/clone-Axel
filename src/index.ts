@@ -80,8 +80,8 @@ async function setupViewer() {
         canvas: document.getElementById('webgi-canvas') as HTMLCanvasElement,
 
     })
-    
-    
+
+
 
     const manager = await viewer.addPlugin(AssetManagerPlugin)
     const camera = viewer.scene.activeCamera
@@ -100,10 +100,11 @@ async function setupViewer() {
 
     //Loader
     const importer = manager.importer as AssetImporter
-
+    // document.body.style.overflowY = 'hidden';
+    document.body.style.overflowY = 'hidden'
     importer.addEventListener("onProgress", (ev) => {
         const progressRatio = (ev.loaded / ev.total)
-        console.log(progressRatio)
+
         document.querySelector('.progress')?.setAttribute('style', `transform:scaleX(${progressRatio})`)
     })
     importer.addEventListener("onLoad", (ev) => {
@@ -122,7 +123,7 @@ async function setupViewer() {
     viewer.getPlugin(TonemapPlugin)!.config!.clipBackground = true
 
     viewer.scene.activeCamera.setCameraOptions({ controlsEnabled: false })
-    
+
 
     function setupScrollanimation() {
 
@@ -130,18 +131,18 @@ async function setupViewer() {
         // mobile and desktop check
         mm.add({
             isMobile: "(max-width:799px)",
-            isDesktop:"(min-width:800px)"
+            isDesktop: "(min-width:800px)"
         }, (context) => {
             const { isMobile, isDesktop } = context.conditions;
-            console.log(context.conditions)
+
 
             const canvas = document.getElementById("webgi-canvas");
             const tl = gsap.timeline()
             tl
                 .to(canvas, {
                     keyframes: {
-                        "50%": { x: isMobile ? 140: 120 },
-                        "100%": { y: isMobile?250:280, x:isMobile?170: 150, ease: "none" }
+                        "50%": { x: isMobile ? 140 : 120 },
+                        "100%": { y: isMobile ? 250 : 280, x: isMobile ? 170 : 150, ease: "none" }
                     },
                     duration: 5,
                     scrollTrigger: {
@@ -172,50 +173,50 @@ async function setupViewer() {
                     x: 100,
                     duration: 3,
                     ease: "power1.in",
-                   
+
                     scrollTrigger: {
                         trigger: "#makeover-section",
                         start: "top +=400",
                         end: "top +=140",
-                        
+
                         scrub: true,
-                        
+
                         immediateRender: false
                     },
-                    
+
                 })
                 .from("#makeover-workspace", {
                     x: 100,
                     duration: 3,
                     ease: "power1.inOut",
-                    
+
                     scrollTrigger: {
                         trigger: "#makeover-section",
                         start: "top +=400",
                         end: "top +=140",
-                        
+
                         scrub: true,
                         immediateRender: false
                     },
-                    
+
                 }, "<+=1")
                 .from("#makeover-recreation", {
                     x: 100,
                     duration: 3,
                     ease: "power1.in",
-                    
+
                     scrollTrigger: {
                         trigger: "#makeover-section",
                         start: "top +=400",
                         end: "top +=140",
-                        
+
                         scrub: true,
                         immediateRender: false
                     },
-                    
+
                 }, "<+=1")
         })
-        
+
     }
 
     setupScrollanimation()
